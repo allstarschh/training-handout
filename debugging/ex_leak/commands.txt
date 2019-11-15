@@ -1,0 +1,5 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# Run through valgrind, and also show still reachable blocks
+valgrind --show-reachable=yes --leak-check=full ./ex_leak

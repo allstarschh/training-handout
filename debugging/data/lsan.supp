@@ -1,0 +1,14 @@
+leak:libQt5Qml
+leak:libQt5WebEngineCore
+leak:libdbus-1
+leak:libqtquickscene3dplugin
+leak:QMetaObjectBuilder::toMetaObject
+leak:libxcb
+leak:KCrash::initialize
+leak:libpython3
+leak:libpyside2
+leak:libshiboken2
+leak:PySide2/QtCore
+leak:cpython
+leak:libfreetype
+leak:libfontconfig

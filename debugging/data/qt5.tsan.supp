@@ -1,0 +1,3 @@
+race:QBasicAtomicInteger
+race:QBasicAtomicPointer
+race:QGenericAtomicOps

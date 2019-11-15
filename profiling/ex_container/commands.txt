@@ -1,0 +1,6 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# To show various interesting non-default events, showing why a list is slower than a vector:
+perf stat -e instructions,cycles,cycle_activity.stalls_total,cycle_activity.stalls_mem_any ./ex_container list
+

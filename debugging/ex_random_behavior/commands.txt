@@ -1,0 +1,36 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# Recording
+rr record -n ./ex_random_behavior
+
+# Replaying and Debugging
+rr replay
+# or using cgdb:
+rr replay --debugger=/usr/bin/cgdb --no-redirect-output
+
+(rr) continue
+ex_random_behavior: ../../training-material/addon/debugging/ex_random_behavior/ex_random_behavior.cpp:81: int main(int, char**): Assertion `workerThreadHasStarted == true' failed.
+Thread 1 received signal SIGABRT, Aborted.
+0x00007ffbdc4869eb in raise () from /lib64/libc.so.6
+(rr) b ex_random_behavior.cpp:81
+Breakpoint 1 at 0x40134c: file ../../training-material/addon/debugging/ex_random_behavior/ex_random_behavior.cpp, line 81.
+# With RR, run restarts the replay of the recording from the beginning
+# We get exactly the same execution state as previously (same memory addresses, pids ...)
+(rr) run
+(rr) continue
+Thread 1 hit Breakpoint 1, main () at ../../training-material/addon/debugging/ex_random_behavior/ex_random_behavior.cpp:81
+81          assert(workerThreadHasStarted);
+(rr) print workerThreadHasStarted
+$1 = false
+(rr) awatch -l workerThreadHasStarted
+Hardware access (read/write) watchpoint 2: -location workerThreadHasStarted
+(rr) reverse-continue
+[Switching to Thread 2921.2925]
+Thread 2 hit Hardware access (read/write) watchpoint 2: -location workerThreadHasStarted
+Value = false
+0x0000000000401258 in expensiveComputations () at ../../training-material/addon/debugging/ex_random_behavior/ex_random_behavior.cpp:50
+50          workerThreadHasStarted = (int(secs) % 2 == 0);
+
+Note that `watch -l workerThreadHasStarted` doesn't work here since the value of workerThreadHasStarted
+does not actually change (it goes from false to false). So in this specific example we need a read/write watchpoint.

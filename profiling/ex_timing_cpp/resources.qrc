@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="input.txt">../data/qt-devel-june-2015.txt</file>
+    </qresource>
+</RCC>

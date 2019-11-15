@@ -1,0 +1,43 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+(gdb) start
+Temporary breakpoint 1, main () at ../../ex_watchpoint/ex_watchpoint.cpp:30
+30      {
+(gdb) n
+31          MyClass c;
+(gdb) n
+32          std::cerr << c.isValid() << '\n'; // step into isValid
+(gdb) step
+MyClass::isValid (this=0x7fffffffc497) at ../../ex_watchpoint/ex_watchpoint.cpp:18
+18              return m_member; // here try `watch m_member` and what happens when exiting the method. Solution: `watch -l m_member`.
+(gdb) watch m_member
+Hardware watchpoint 2: m_member
+(gdb) cont
+[1]+  Stopped                 gdb ./ex_watchpoint/ex_watchpoint
+current stack frame does not contain a variable named `this'
+Error in re-setting breakpoint 2: No symbol "m_member" in current context.
+
+# OK, restart
+(gdb) start
+Temporary breakpoint 1, main () at ../../ex_watchpoint/ex_watchpoint.cpp:30
+30      {
+(gdb) n
+31          MyClass c;
+(gdb) n
+32          std::cerr << c.isValid() << '\n'; // step into isValid
+(gdb) step
+MyClass::isValid (this=0x7fffffffc497) at ../../ex_watchpoint/ex_watchpoint.cpp:18
+18              return m_member; // here try `watch m_member` and what happens when exiting the method. Solution: `watch -l m_member`.
+(gdb) watch -l m_member
+Hardware watchpoint 2: -location m_member
+(gdb) cont
+Continuing.
+
+Hardware watchpoint 2: -location m_member
+
+Old value = true
+New value = false
+MyClass::doSomething (this=0x7fffffffc497) at ../../ex_watchpoint/ex_watchpoint.cpp:24
+24          }
+

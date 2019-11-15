@@ -1,0 +1,19 @@
+{
+    ignore_a_memcheck_error_in_libdl
+    MemCheck:Cond
+    fun:strlen
+    fun:_dl_open
+    obj:*libdl-2*.so
+    fun:_dl_catch_error*
+}
+{
+   ignore_memory_leak_in_fontconfig_init
+   Memcheck:Leak
+   ...
+   fun:FcInit
+}
+{
+   ignore_fetchAndStore_race_in_helgrind
+   Helgrind:Race
+   fun:_ZN15QBasicAtomicOps*fetchAndStore*
+}

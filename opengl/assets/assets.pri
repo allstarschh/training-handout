@@ -1,0 +1,2 @@
+
+DEFINES += ASSETS=$$shadowed($$PWD)/

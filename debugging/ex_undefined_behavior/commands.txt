@@ -1,0 +1,9 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# Compile example with the undefined behaviour sanitizer enabled.
+# Use clang since it usually has better sanitizers than GCC.
+qmake -spec linux-clang-libc++ CONFIG+="sanitizer sanitize_undefined"; make clean; make
+
+# Run the example, and print a backtrace on every detected undefined behaviour.
+UBSAN_OPTIONS=print_stacktrace=1 ./ex_undefined_behavior

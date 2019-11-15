@@ -1,0 +1,3 @@
+#!/bin/sh
+
+perf report --sort srcline --call-graph srcline --show-total-period --no-children

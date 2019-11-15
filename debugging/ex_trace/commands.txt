@@ -1,0 +1,14 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# Run strace with some useful arguments:
+#   -y -yy: Print filename in addition to file descriptor number
+#   -tt: Print timestamp of each system call
+#   -T: Print duration of each system call
+#   -e trace=file: Print only file-related system calls
+#   -r: relative timestamps
+strace -e trace=file -y -yy -r -t -T ./ex_trace
+
+# Also print a backtrace for each system call (only supported if strace
+# was compiled with libunwind support)
+strace -k -e trace=file -y -yy -r -t -T ./ex_trace |& c++filt

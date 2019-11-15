@@ -1,0 +1,18 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# Run the example through valgrind (do not build with enabled sanitizers in this case)
+valgrind --leak-check=no --track-origins=yes ./ex_invalid_readwrite
+
+# Compile example with the address sanitizer enabled.
+# Use clang since it usually has better sanitizers than GCC.
+qmake CONFIG+="sanitizer sanitize_address" -spec linux-clang-libc++; make clean; make
+
+# Like the above, but also enable continuing after encountering an error
+qmake QMAKE_CXXFLAGS+="-fsanitize-recover=all" CONFIG+="sanitizer sanitize_address" -spec linux-clang-libc++; make clean; make
+
+# Run the example
+ASAN_SYMBOLIZER_PATH=/usr/lib/llvm-4.0/bin/llvm-symbolizer ./ex_invalid_readwrite
+
+# Run the example and continue on error (needs -fsanitize-recover=all from above)
+ASAN_SYMBOLIZER_PATH=/usr/lib/llvm-4.0/bin/llvm-symbolizer ASAN_OPTIONS=halt_on_error=0 ./ex_invalid_readwrite

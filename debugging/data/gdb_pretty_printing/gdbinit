@@ -1,0 +1,25 @@
+#
+# BEGIN SETUP:
+# - add the following lines (without the leading #) to your ~/.gdbinit:
+# - make sure to adapt the paths
+#
+
+#
+# python
+# import sys
+# sys.path.insert(0, '/path/to/addon/debugging/data/gdb_pretty_printing')
+# end
+#
+# source /path/to/addon/debugging/data/gdb_pretty_printing/gdbinit
+#
+
+#
+# END SETUP
+#
+
+python
+
+from qt import register_qt_printers
+register_qt_printers (None)
+
+end

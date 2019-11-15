@@ -1,0 +1,10 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# Compile example with the thread sanitizer enabled.
+# Use clang since it usually has better sanitizers than GCC.
+qmake -spec linux-clang-libc++ CONFIG+="sanitizer sanitize_thread"; make clean; make
+
+# Run example with helgrind and suppress false positives from various libraries.
+# Do *not* compile with thread sanitizer in this case.
+valgrind --suppressions=../data/kde.valgrind.supp --tool=helgrind ./ex_datarace

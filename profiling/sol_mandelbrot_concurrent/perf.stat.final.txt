@@ -1,0 +1,15 @@
+# started on Wed May  4 11:26:45 2016
+
+
+ Performance counter stats for './lab_mandelbrot_concurrent/src/lab_mandelbrot_concurrent -b 5' (10 runs):
+
+      11311.410164      task-clock (msec)         #    7.627 CPUs utilized            ( +-  0.10% )
+            36,793      context-switches          #    0.003 M/sec                    ( +-  1.30% )
+             4,725      cpu-migrations            #    0.418 K/sec                    ( +-  1.44% )
+             3,521      page-faults               #    0.311 K/sec                    ( +-  2.39% )
+    41,741,512,583      cycles                    #    3.690 GHz                      ( +-  0.10% )
+    61,284,128,037      instructions              #    1.47  insn per cycle           ( +-  0.00% )
+     6,695,615,348      branches                  #  591.935 M/sec                    ( +-  0.01% )
+        10,370,406      branch-misses             #    0.15% of all branches          ( +-  0.15% )
+
+       1.483027172 seconds time elapsed                                          ( +-  0.28% )

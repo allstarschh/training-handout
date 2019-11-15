@@ -1,0 +1,5 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# Create HTML report
+gcovr -r . --html --html-details --exclude-unreachable-branches -o example.html

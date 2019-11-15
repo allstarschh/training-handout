@@ -1,0 +1,14 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# Show all sched_switch tracepoints including their backtrace
+perf trace --no-syscalls --event sched:sched_switch -m 10M --call-graph dwarf ./ex_sleep
+
+# Show all syscalls including their backtrace
+perf trace -m 10M --call-graph dwarf ./ex_sleep
+
+# Show a summary of all syscalls
+perf trace --summary ./ex_sleep
+
+# Show all major page faults
+drop_caches.sh; perf trace -F maj --no-syscalls --call-graph dwarf -m 10M ./ex_sleep

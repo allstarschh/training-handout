@@ -1,0 +1,13 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+# In gdb:
+
+python
+import sys
+sys.path.insert(0, '/home/user/KDAB/training-material/addon/debugging/ex_gdb_pretty_printer')
+import money_printer
+end
+
+info pretty-printer
+

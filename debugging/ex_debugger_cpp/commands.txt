@@ -1,0 +1,73 @@
+# This file contains various command lines that are useful for
+# demonstrating and working with the example.
+
+
+# printDemo():
+(gdb) p i
+(gdb) p *d
+(gdb) p f
+(gdb) p complexData
+(gdb) fin
+
+
+# breakPoints():
+(gdb) break ex_debugger_cpp.cpp:55
+Breakpoint 2 at 0x555555555846: file /home/kdab/src/training-handout/debugging/ex_debugger/ex_debugger_cpp.cpp, line 55.
+(gdb) condition 2 i % 2 == 0
+(gdb) commands 2
+Type commands for breakpoint(s) 2, one per line.
+End with a line saying just "end".
+>print x
+>print y
+>cont
+>end
+(gdb) fin
+
+
+# breakPointsWithFunctionCalls
+(gdb) break ex_debugger_cpp.cpp:69 if greeting == "Hello"
+Breakpoint 2 at 0x401e0f: file ex_debugger_cpp.cpp, line 69.
+(gdb) cont
+Continuing.
+Error in testing breakpoint condition:
+Cannot resolve function operator== to any overloaded instance
+(gdb) del 1
+(gdb) break ex_debugger_cpp.cpp:69 if strcmp(greeting.data(), "Hello") == 0
+Breakpoint 2 at 0x401db4: file ex_debugger_cpp.cpp, line 69.
+(gdb) cont
+Continuing.
+Bonjour
+Hallo
+
+Breakpoint 2, breakPointsWithFunctionCalls () at ex_debugger_cpp.cpp:69
+(gdb) p i
+$1 = 2
+
+
+# infiniteLoop():
+Program received signal SIGINT, Interrupt.
+0x000055555555588b in infiniteLoop () at /home/kdab/src/training-handout/debugging/ex_debugger/ex_debugger_cpp.cpp:63
+(gdb) set run = false
+(gdb) fin
+# Alternative to the two commands above:
+(gdb) ret
+Make infiniteLoop() return now? (y or n) y
+#0  main () at ex_debugger_cpp.cpp:108
+
+
+# deadlock():
+Program received signal SIGINT, Interrupt.
+0x00007ffff7f5c76c in __lll_lock_wait () from /usr/lib/libpthread.so.0
+(gdb) bt
+#0  0x00007ffff7f5c76c in __lll_lock_wait () from /usr/lib/libpthread.so.0
+#1  0x00007ffff7f55d68 in pthread_mutex_lock () from /usr/lib/libpthread.so.0
+#2  0x0000555555555f30 in __gthread_mutex_lock (__mutex=0x7fffffffc430) at /usr/include/c++/9.1.0/x86_64-pc-linux-gnu/bits/gthr-default.h:749
+#3  0x00005555555560ac in std::mutex::lock (this=0x7fffffffc430) at /usr/include/c++/9.1.0/bits/std_mutex.h:100
+#4  0x0000555555556684 in std::lock_guard<std::mutex>::lock_guard (this=0x7fffffffc428, __m=...) at /usr/include/c++/9.1.0/bits/std_mutex.h:159
+#5  0x0000555555555db0 in deadlock () at ../../ex_debugger_cpp/ex_debugger_cpp.cpp:103
+#6  0x0000555555555e48 in main () at ../../ex_debugger_cpp/ex_debugger_cpp.cpp:124
+(gdb) frame 5
+#5  0x00005555555558d8 in deadlock () at /home/kdab/src/training-handout/debugging/ex_debugger/ex_debugger_cpp.cpp:75
+(gdb) call mutex.unlock()
+(gdb) fin
+
